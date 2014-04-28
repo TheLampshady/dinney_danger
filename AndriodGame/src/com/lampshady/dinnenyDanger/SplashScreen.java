@@ -5,8 +5,8 @@ import com.lampshady.framework.Graphics;
 import com.lampshady.framework.Screen;
 import com.lampshady.framework.Graphics.ImageFormat;
 
-public class SplashLoadingScreen extends Screen {
-    public SplashLoadingScreen(Game game) {
+public class SplashScreen extends Screen {
+    public SplashScreen(Game game) {
         super(game);
     }
 
@@ -16,12 +16,14 @@ public class SplashLoadingScreen extends Screen {
         Assets.splash= g.newImage("splash.jpg", ImageFormat.RGB565);
 
        
-        game.setScreen(new SplashScreen(game));
+        game.setScreen(new LoadingScreen(game));
 
     }
 
     @Override
     public void paint(float deltaTime) {
+        Graphics g = game.getGraphics();
+        g.drawImage(Assets.splash, 0, 0);
     }
 
     @Override

@@ -116,11 +116,7 @@ public class GameScreen extends Screen {
 	public void update(float deltaTime) {
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 
-		// We have four separate update methods in this example.
-		// Depending on the state of the game, we call different update methods.
-		// Refer to Unit 3's code. We did a similar thing without separating the
-		// update methods.
-
+		//Update States: Updates are executed based on game state
 		if (state == GameState.Running)
 			updateRunning(touchEvents, deltaTime);
 		if (state == GameState.Ready)
@@ -133,8 +129,9 @@ public class GameScreen extends Screen {
 	}
 	
 	private void updateRunning(List<TouchEvent> touchEvents, float deltaTime) {
-		Button right = buttons.get(5);
 		Button duck = buttons.get(2);
+		Button left = buttons.get(4);
+		Button right = buttons.get(5);
 		
 		int len = touchEvents.size();
 		int action=0;
@@ -152,9 +149,11 @@ public class GameScreen extends Screen {
 				case 2:	//Button Release: Duck
 					player.setDucked(false);
 					break;
-
 				case 3:	//Button Release: Pause
 					pause();
+					break;
+				case 4:	//Button Release: Left
+					player.setMovingLeft(false);
 					break;
 
 				case 5:	//Button Release: Right
@@ -182,6 +181,11 @@ public class GameScreen extends Screen {
 						player.setDucked(true);
 						duck.setTouchID(event.pointer);
 					}
+					break;	
+					
+				case 4:	//Button Pressed: Left
+					player.setMovingLeft(true);
+					left.setTouchID(event.pointer);
 					break;
 				
 				case 5:	//Button Pressed: Right
@@ -199,17 +203,23 @@ public class GameScreen extends Screen {
 			}
 			
 			if (event.type == TouchEvent.TOUCH_DRAGGED) {
+								
+				duck = buttons.get(2);
+				if((event.pointer == duck.getTouchID()) && (!duck.inBounds(event))){
+					player.setMovingRight(false);
+					duck.setTouchID(-1);
+				}
+				
+				left = buttons.get(4);
+				if((event.pointer == left.getTouchID()) && (!left.inBounds(event))){
+					player.setMovingLeft(false);
+					left.setTouchID(-1);
+				}
 				
 				right = buttons.get(5);
 				if((event.pointer == right.getTouchID()) && (!right.inBounds(event))){
 					player.setMovingRight(false);
 					right.setTouchID(-1);
-				}
-				
-				duck = buttons.get(2);
-				if((event.pointer == duck.getTouchID()) && (!duck.inBounds(event))){
-					player.setMovingRight(false);
-					duck.setTouchID(-1);
 				}
 				
 				
@@ -223,27 +233,37 @@ public class GameScreen extends Screen {
 						duck.setTouchID(event.pointer);
 					}
 					break;
+				case 4:	//Button Dragged: Left
+					player.setMovingLeft(true);
+					left.setTouchID(event.pointer);
+					break;
 				case 5:	//Button Dragged: Right
 					player.setMovingRight(true);
 					right.setTouchID(event.pointer);
 					break;
+
 				}
 
 			}
 
 		}// For Loop
 		
+
+		//Check Button State: Duck Button
+		if(player.isDucked())
+			player.setSpeedX(0);
+		
+		//Check Button State: Left Button
+		if(player.isMovingLeft())
+			player.moveLeft();
+		else
+			player.stopLeft();
+				
 		//Check Button State: Right Button
 		if(player.isMovingRight())
 			player.moveRight();
 		else
 			player.stopRight();
-		
-		//Check Button State: Duck Button
-		if(player.isDucked())
-			player.setSpeedX(0);
-		
-		
 		
 		
 		//Check miscellaneous events like death:

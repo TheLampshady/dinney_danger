@@ -59,9 +59,9 @@ public class Player {
 		
 		anim = new Animation();
 		anim.addFrame(character, 1250);
-		anim.addFrame(character2, 50);
-		anim.addFrame(character3, 50);
-		anim.addFrame(character2, 50);
+		anim.addFrame(character2, 100);
+		anim.addFrame(character3, 100);
+		anim.addFrame(character2, 100);
 		
 		currentSprite = anim.getImage();
 		

@@ -1,5 +1,7 @@
 package com.lampshady.dinnenyDanger;
 
+import java.util.Calendar;
+
 import com.lampshady.framework.Game;
 import com.lampshady.framework.Graphics;
 import com.lampshady.framework.Screen;
@@ -16,7 +18,10 @@ public class LoadingScreen extends Screen {
         Graphics g = game.getGraphics();
         String prefix = SampleGame.version+".";
         String world = SampleGame.world+".";
+        int waitTime = 5;
         
+        Calendar c = Calendar.getInstance();
+        int loadTime = c.get(Calendar.SECOND);
         
         Assets.menu = g.newImage("menu.png", ImageFormat.RGB565);
         
@@ -44,10 +49,18 @@ public class LoadingScreen extends Screen {
        
         Assets.button = g.newImage("button.jpg", ImageFormat.RGB565);
 
-        //This is how you would load a sound if you had one.
+        //LLoad Sound
         //Assets.click = game.getAudio().createSound("explode.ogg");
+      
+        c = Calendar.getInstance();
+        loadTime = c.get(Calendar.SECOND)-loadTime;
+        
+        if(loadTime<5 && loadTime>0){
+	        try {
+				Thread.sleep((waitTime-loadTime)*1000);
+			} catch (InterruptedException e) {}
+        }
 
-       
         game.setScreen(new MainMenuScreen(game));
 
     }
