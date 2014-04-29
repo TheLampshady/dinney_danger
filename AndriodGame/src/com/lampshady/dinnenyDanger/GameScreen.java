@@ -61,7 +61,7 @@ public class GameScreen extends Screen {
 		
 		score = 0;
 
-		loadMap();
+		loadMap(SampleGame.map);
 
 		// Defining a paint object
 		paint = new Paint();
@@ -77,11 +77,11 @@ public class GameScreen extends Screen {
 		paint2.setColor(Color.WHITE);
 	}
 	
-	private void loadMap() {
+	private void loadMap(String map) {
 		ArrayList<String> lines = new ArrayList<String>();
 		int width = 0;
 
-		Scanner scanner = new Scanner(SampleGame.map);
+		Scanner scanner = new Scanner(map);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 
@@ -110,6 +110,9 @@ public class GameScreen extends Screen {
 
 			}
 		}
+	}
+	private void loadMap() {
+		
 	}
 	
 	@Override
