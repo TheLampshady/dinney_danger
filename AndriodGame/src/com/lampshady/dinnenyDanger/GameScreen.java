@@ -22,9 +22,12 @@ public class GameScreen extends Screen {
 	private static Background bg1, bg2;
 	private static Player player;
 	public static ArrayList<Heliboy> heliboys;
-	public static ArrayList<Button> buttons;
 	
-	private ArrayList<Tile> tilearray = new ArrayList<Tile>();
+	private static ArrayList<Button> buttons;
+	private GameMap level;
+	
+	//private ArrayList<Tile> tilearray = new ArrayList<Tile>(); ***************
+	
 	
 	public static int score;
 	int livesLeft = 1;
@@ -43,6 +46,8 @@ public class GameScreen extends Screen {
 		heliboys.add(new Heliboy(340, 360));
 		heliboys.add(new Heliboy(700, 360));
 
+		level = new GameMap();
+		
 		/*	1-Jump
 		 *	2-Duck
 		 *	3-Pause		
@@ -61,7 +66,8 @@ public class GameScreen extends Screen {
 		
 		score = 0;
 
-		loadMap(SampleGame.map);
+		//level.loadMap(SampleGame.map);
+		level.loadMap();
 
 		// Defining a paint object
 		paint = new Paint();
@@ -77,43 +83,7 @@ public class GameScreen extends Screen {
 		paint2.setColor(Color.WHITE);
 	}
 	
-	private void loadMap(String map) {
-		ArrayList<String> lines = new ArrayList<String>();
-		int width = 0;
-
-		Scanner scanner = new Scanner(map);
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-
-			//End of File
-			if (line == null) {
-				break;
-			}
-
-			if (!line.startsWith("!")) {
-				lines.add(line);
-				width = Math.max(width, line.length());
-
-			}
-		}
-		scanner.close();
-
-		for (int j = 0; j < 12; j++) {
-			String line = (String) lines.get(j);
-			for (int i = 0; i < width; i++) {
-
-				if (i < line.length()) {
-					char ch = line.charAt(i);
-					Tile t = new Tile(i, j, Character.getNumericValue(ch));
-					tilearray.add(t);
-				}
-
-			}
-		}
-	}
-	private void loadMap() {
-		
-	}
+	
 	
 	@Override
 	public void update(float deltaTime) {
@@ -282,7 +252,7 @@ public class GameScreen extends Screen {
 		player.update();
 
 		//Update: Tiles
-		updateTiles();
+		level.update();
 		
 		ArrayList<Projectile> projectiles = player.getProjectiles();
 		for (int i = 0; i < projectiles.size(); i++) {
@@ -367,7 +337,7 @@ public class GameScreen extends Screen {
 
 		g.drawImage(Assets.background, bg1.getBgX(), bg1.getBgY());
 		g.drawImage(Assets.background, bg2.getBgX(), bg2.getBgY());
-		paintTiles(g);
+		level.paint(g);
 
 		//Draw: Projectiles
 		for(Projectile p : player.getProjectiles())
@@ -391,23 +361,7 @@ public class GameScreen extends Screen {
 			drawGameOverUI();
 
 	}
-	
-	private void updateTiles() {
-		for (int i = 0; i < tilearray.size(); i++) {
-			Tile t = (Tile) tilearray.get(i);
-			t.update();
-		}
-	}
-	
-	private void paintTiles(Graphics g) {
-		for (int i = 0; i < tilearray.size(); i++) {
-			Tile t = (Tile) tilearray.get(i);
-			if (t.getType() != 0) {
-				g.drawImage(t.getTileImage(), t.getTileX(), t.getTileY());
-			}
-		}
-	}
-	
+		
 
 	private void nullify() {
 
@@ -429,7 +383,7 @@ public class GameScreen extends Screen {
 		heliboys=null;
 
 		//TODO Nullify Tiles
-		
+		level=null;
 		// Call garbage collector to clean up memory.
 		System.gc();
 
