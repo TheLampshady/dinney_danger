@@ -337,12 +337,14 @@ public class GameScreen extends Screen {
 
 		g.drawImage(Assets.background, bg1.getBgX(), bg1.getBgY());
 		g.drawImage(Assets.background, bg2.getBgX(), bg2.getBgY());
-		level.paint(g);
-
+		
 		//Draw: Projectiles
 		for(Projectile p : player.getProjectiles())
 			p.draw(g);
-		
+			
+		//Draw Level
+		level.paint(g);
+			
 		//Draw: Player
 		player.draw(g);
 		
