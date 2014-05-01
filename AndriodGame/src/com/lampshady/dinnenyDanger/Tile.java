@@ -5,36 +5,37 @@ import android.graphics.Rect;
 import com.lampshady.framework.Image;
 
 public class Tile {
-	private int tileX, tileY, speedX, type;
+	private int tileX, tileY, speedX;
+	private char type;
 	private int tileSize = 40;
     public Image tileImage;
     private Rect r;
     
     private Background bg = GameScreen.getBg1();
     //private Robot robot = StartingClass.getRobot();
-    private Player robot = GameScreen.getRobot();
+    private Player player = GameScreen.getRobot();
     
-    public Tile(int x, int y, int typeInt) {
+    public Tile(int x, int y, char typeChar) {
         tileX = x * tileSize;
         tileY = y * tileSize;
 
-        type = typeInt;
+        type = typeChar;
         r = new Rect();
         switch (type) {
         
-        case 2:		tileImage = Assets.tileBot;
+        case '2':		tileImage = Assets.tileBot;
         			break;
-        case 4:		tileImage = Assets.tileLeft;
+        case '4':		tileImage = Assets.tileLeft;
         			break;
-        case 5:		tileImage = Assets.tile;
+        case '5':		tileImage = Assets.tile;
         			break;
-        case 6:		tileImage = Assets.tileRight;
+        case '6':		tileImage = Assets.tileRight;
         			break;
-        case 7:		tileImage = Assets.tileTopLeft;
+        case '7':		tileImage = Assets.tileTopLeft;
         			break;
-        case 8:		tileImage = Assets.tileTop;
+        case '8':		tileImage = Assets.tileTop;
         			break;
-        case 9:		tileImage = Assets.tileTopRight;
+        case '9':		tileImage = Assets.tileTopRight;
         			break;
         default: 	type = 0;
         			break;
@@ -50,9 +51,10 @@ public class Tile {
     	
     	//Android Port: r.setBounds(tileX, tileY, 40, 40);
     	r.set(tileX, tileY, tileX+tileSize, tileY+tileSize);
-    	if (Rect.intersects(r, robot.yellowRed) && type != 0) {
-    		checkVerticalCollision(robot.topCol, robot.botCol);
-    		checkSideCollision(robot.lftCol, robot.rhtCol, robot.footleft, robot.footright);
+    	if (Rect.intersects(r, player.yellowRed) && type != 0) {
+    		checkVerticalCollision(player.topCol, player.botCol);
+    		checkSideCollision(player.lftCol, player.rhtCol, player.footleft, player.footright);
+    		
     	}
     }
     
@@ -62,32 +64,32 @@ public class Tile {
         }
 
         //Action: Falling
-        if ((type == 7 || type == 8 ||type == 9) && Rect.intersects(rbot, r) && (robot.getSpeedY() >= 0)) {
-            robot.setJumped(false);
-            robot.setSpeedY(0);
-            robot.setCenterY(tileY - 62);
+        if ((type == '7' || type == '8' ||type == '9') && Rect.intersects(rbot, r) && (player.getSpeedY() >= 0)) {
+            player.setJumped(false);
+            player.setSpeedY(0);
+            player.setCenterY(tileY - 62);
         }
     }
 
     public void checkSideCollision(Rect rleft, Rect rright, Rect leftfoot, Rect rightfoot) {
-        if (type != 5 && type != 2 && type != 0){
+        if (type != '5' && type != '2' && type != '0'){
             if (Rect.intersects(rleft, r)) {
-                robot.setCenterX(tileX + 102);
-                robot.setLeftWall(true);
+                player.setCenterX(tileX + 102);
+                player.setLeftWall(true);
    
             }else if (Rect.intersects(leftfoot, r)) {
-                robot.setCenterX(tileX + 85);
-                robot.setLeftWall(true);
+                player.setCenterX(tileX + 85);
+                player.setLeftWall(true);
             }
            
             if (Rect.intersects(rright, r)) {
-                robot.setCenterX(tileX - 62);
-                robot.setRightWall(true);
+                player.setCenterX(tileX - 62);
+                player.setRightWall(true);
             }
            
             else if (Rect.intersects(rightfoot, r)) {
-                robot.setCenterX(tileX - 45);
-                robot.setRightWall(true);
+                player.setCenterX(tileX - 45);
+                player.setRightWall(true);
             }
         }
     }

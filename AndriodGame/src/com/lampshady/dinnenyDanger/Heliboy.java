@@ -20,6 +20,9 @@ public class Heliboy extends Enemy{
 		
 		setMaxHealth(5);
 		setCurrentHealth(5);
+				
+//		setEngage(false);
+//		setEngageDistance(300);
 		
 		heliboy = Assets.heliboy1a;
 		heliboy2 = Assets.heliboy1b;
@@ -43,6 +46,7 @@ public class Heliboy extends Enemy{
 	@Override
 	public void update() {
 		super.update();
+		
 		hanim.update(50);
 		currentSprite = hanim.getImage();
 	}

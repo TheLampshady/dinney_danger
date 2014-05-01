@@ -2,13 +2,16 @@ package com.lampshady.dinnenyDanger;
 
 import android.graphics.Rect;
 
-public class Enemy {
-	private int maxHealth, currentHealth, power;
+abstract class Enemy {
+	private int maxHealth, currentHealth;
 	private int centerX, centerY, width, height, speedX;
 	private int movementSpeed;
 	
+/*	private int engageDistance;
+	private boolean engage;*/
+	
 	private Background bg = GameScreen.getBg1();
-	private Player robot = GameScreen.getRobot();
+	private Player player = GameScreen.getRobot();
 	
 	//Android Port: Rectangle x = new Rectangle(0, 0, 0, 0);
 	public Rect collision = new Rect(0, 0, 0, 0);
@@ -24,17 +27,21 @@ public class Enemy {
 		//Android Port: x.setBounds(centerX-25, centerY-25, width-46, height-36);
 		collision.set(centerX - width/2, centerY - height/2, centerX + width/2, centerY + height/2);
 		
-		if (Rect.intersects(collision, robot.yellowRed)){
+		if (Rect.intersects(collision, player.yellowRed)){
 			checkPlayerCollision();
 		}
 	}
 	
+//	private void checkPlayerEngage(){
+//		if(Math.abs(player.getCenterX() - centerX) < engageDistance)engage=true;
+//	}
+	
 	private void checkPlayerCollision(){
 		//Android Port: x.intersects(y)
-		if (Rect.intersects(collision, robot.topCol) || 
-				Rect.intersects(collision, robot.botCol) || 
-				Rect.intersects(collision, robot.lftCol) || 
-				Rect.intersects(collision, robot.rhtCol))
+		if (Rect.intersects(collision, player.topCol) || 
+				Rect.intersects(collision, player.botCol) || 
+				Rect.intersects(collision, player.lftCol) || 
+				Rect.intersects(collision, player.rhtCol))
 		{			
 			System.out.println("collision");
 		}
@@ -46,11 +53,11 @@ public class Enemy {
 		if (centerX < -95 || centerX > 810)
 			movementSpeed = 0;
 
-		else if (Math.abs(robot.getCenterX() - centerX) < 5)
+		else if (Math.abs(player.getCenterX() - centerX) < 5)
 			movementSpeed = 0;
 
 		else {
-			if (robot.getCenterX() >= centerX)
+			if (player.getCenterX() >= centerX)
 				movementSpeed = 1;
 			else
 				movementSpeed = -1;
@@ -74,12 +81,7 @@ public class Enemy {
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
 	}
-	public int getPower() {
-		return power;
-	}
-	public void setPower(int power) {
-		this.power = power;
-	}
+
 	public int getSpeedX() {
 		return speedX;
 	}
@@ -110,6 +112,11 @@ public class Enemy {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-
+/*	public void setEngageDistance(int engageDistance) {
+		this.engageDistance = engageDistance;
+	}
+	public void setEngage(boolean engage) {
+		this.engage = engage;
+	}*/
 	
 }

@@ -10,42 +10,54 @@ import com.lampshady.framework.Graphics;
 public class GameMap {
 
 	private ArrayList<Tile> tilearray;
-	ArrayList<ArrayList<String>> mapSections = new ArrayList<ArrayList<String>>();
+	ArrayList<ArrayList<String>> gameMap = new ArrayList<ArrayList<String>>();
 	
 	private int length=400, height=12,sectionLen=20;
 	private int masterBuilder;
+	private int tileSize = 40;
+	
+	private String validTiles = "123456789";
+	private String validEnemies = "hH";
 	
 	public GameMap(){
 		tilearray = new ArrayList<Tile>();
 		
-		mapSections = new ArrayList<ArrayList<String>>();
+		gameMap = new ArrayList<ArrayList<String>>();
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
-				"", "", "", "", "", "", "", "", "", "",
+				"", "", "", "", "", "", "", "", 
+				"          h      h", 
+				"",
 				"88888888888888888888"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
-				"", "", "", "", "", "", "", "", "",
+				"", "", "", "", "", "", "", 
+				"               h", 
+				"",
 				"   7889      7889", 
 				"88855558888885555888"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
-				"", "", "", "", "", "", "", "", "", "",
+				"", "", "", "", "", "", "", "", 
+				"              h", 
+				"",
 				"88888    88888888888"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
-				"", "", "", "", "", "", "", "", "", "",
+				"", "", "", "", "", "", "", "", 
+				"          h", 
+				"",
 				"888    888888    888"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
 				"", "", "", "", "", "", "", "", 
 				"       78889", 
@@ -53,7 +65,7 @@ public class GameMap {
 				"88855555555555558888"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
 				"", "", "", "", "", "", "", "", 
 				"      79    79", 
@@ -61,13 +73,15 @@ public class GameMap {
 				"88855555    55555888"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
-				"", "", "", "", "", "", "", "", "", "",
+				"", "", "", "", "", "", "", "", 
+				"              h", 
+				"",
 				"    88   88  88   88"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"55555555555555555555",
 				"55555555555555555555", 
 				"22222222222222222222", 
@@ -80,7 +94,7 @@ public class GameMap {
 				"55555555555555555555"
 				)));
 		
-		mapSections.add(new ArrayList<String>(Arrays.asList(
+		gameMap.add(new ArrayList<String>(Arrays.asList(
 				"22222222222222222222",
 				"", "", "", "", 
 				"              79", 
@@ -119,14 +133,20 @@ public class GameMap {
 	}
 	
 	private void inputTiles(ArrayList<String> lines, int startPoint){
+		char ch;
+		
 		for (int h = 0; h < height; h++) {
 			String line = (String) lines.get(h);
 			for (int l = 0; l < sectionLen; l++) {
 
 				if (l < line.length()) {
-					char ch = line.charAt(l);
-					Tile t = new Tile(l+startPoint, h, Character.getNumericValue(ch));
-					tilearray.add(t);
+					ch = line.charAt(l);
+					
+					if(validTiles.indexOf(ch)>=0)
+						tilearray.add(new Tile(l+startPoint, h, ch));
+					else if(validEnemies.indexOf(ch)>=0)
+						GameScreen.heliboys.add(new Heliboy((l+startPoint)*tileSize, h*tileSize));
+					
 				}
 
 			}
@@ -137,12 +157,12 @@ public class GameMap {
 		Random rand = new Random();
 		int section;
 		
-		inputTiles(mapSections.get(0), masterBuilder);
+		inputTiles(gameMap.get(0), masterBuilder);
 		masterBuilder=sectionLen;
 		while(masterBuilder<length){
-			section = rand.nextInt(mapSections.size());
+			section = rand.nextInt(gameMap.size());
 			
-			inputTiles(mapSections.get(section), masterBuilder);
+			inputTiles(gameMap.get(section), masterBuilder);
 			masterBuilder+=sectionLen;
 		}
 		

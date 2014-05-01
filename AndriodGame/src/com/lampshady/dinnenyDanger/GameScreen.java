@@ -25,9 +25,7 @@ public class GameScreen extends Screen {
 	
 	private static ArrayList<Button> buttons;
 	private GameMap level;
-	
-	//private ArrayList<Tile> tilearray = new ArrayList<Tile>(); ***************
-	
+		
 	
 	public static int score;
 	int livesLeft = 1;
@@ -43,8 +41,6 @@ public class GameScreen extends Screen {
 		player = new Player();
 		
 		heliboys = new ArrayList<Heliboy>();
-		heliboys.add(new Heliboy(340, 360));
-		heliboys.add(new Heliboy(700, 360));
 
 		level = new GameMap();
 		
