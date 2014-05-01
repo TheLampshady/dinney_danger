@@ -15,7 +15,8 @@ public class Player extends Character{
     final int MOVESPEED = 5;
   
 	
-	private Image currentSprite, character, characterDown, characterJumped, character2, character3;
+	private Image currentSprite, character, character2, character3;
+	private Image characterDown, characterJumped;
 	private Animation anim;
     
     private int bodyWidth;
@@ -49,6 +50,7 @@ public class Player extends Character{
      	armHeight = 20;
     	armWidth = 26;
 		
+    	//Android Port: Rectangle x = new Rectangle(0, 0, 0, 0);
     	footleft = new Rect(0,0,0,0);
 		footright = new Rect(0,0,0,0);
 		
@@ -87,10 +89,12 @@ public class Player extends Character{
             bg2.setSpeedX(0);
         }
         
+        //Move Character: If left of Screen Center
         if (centerX <= CENTERSCREEN && speedX > 0) {
             centerX += speedX;
         }
         
+        //Scroll Screen: If moving at center screen
         if (speedX > 0 && centerX > CENTERSCREEN && !rightWall) {
             bg1.setSpeedX(-MOVESPEED);
             bg2.setSpeedX(-MOVESPEED);
@@ -99,8 +103,8 @@ public class Player extends Character{
         // Updates Y Position
         centerY += speedY;
 
-        // Handles Jumping
-        speedY += 1;
+        //Gravity
+        speedY += gravity;
 
         //Handles falling without jumping
         if (speedY > 3){

@@ -48,13 +48,13 @@ public class Projectile {
 		for(Heliboy hb : GameScreen.heliboys){
 			int health = hb.getCurrentHealth();
 			
-			if(Rect.intersects(collision,hb.collision)){
+			if(Rect.intersects(collision,hb.col)){
 				visible = false;	
 				if (health > 0) {
 					GameScreen.heliboys.get(i).setCurrentHealth(health - damage);
 				}
 				if (hb.getCurrentHealth() == 0) {
-					GameScreen.heliboys.get(i).setCenterX(-100);
+					GameScreen.heliboys.remove(i);
 					GameScreen.score += 5;
 
 				}

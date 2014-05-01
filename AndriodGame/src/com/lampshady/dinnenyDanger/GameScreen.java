@@ -247,6 +247,10 @@ public class GameScreen extends Screen {
 		//Update: Player
 		player.update();
 
+		//Update: Enemy Array
+		for (Heliboy hb : heliboys)
+			hb.update();
+		
 		//Update: Tiles
 		level.update();
 		
@@ -259,10 +263,6 @@ public class GameScreen extends Screen {
 				projectiles.remove(i);
 			}
 		}
-
-		//Update: Enemy Array
-		for (Heliboy hb : heliboys)
-			hb.update();
 	
 
 		if (player.getCenterY() > 500) {

@@ -12,17 +12,14 @@ public class Heliboy extends Enemy{
 
 	
 	public Heliboy(int centerX, int centerY) {
-		setCenterX(centerX);
-		setCenterY(centerY);
+		this.centerX = centerX;
+		this.centerY = centerY;
 		
-		setWidth(96);
-		setHeight(96);
+		width=96;
+		height=96;
 		
-		setMaxHealth(5);
-		setCurrentHealth(5);
-				
-//		setEngage(false);
-//		setEngageDistance(300);
+		maxHealth=5;
+		currentHealth=5;
 		
 		heliboy = Assets.heliboy1a;
 		heliboy2 = Assets.heliboy1b;
@@ -53,9 +50,9 @@ public class Heliboy extends Enemy{
 	
 	public void draw(Graphics g){
 		if(GameScreen.DEBUG)
-			g.drawRectDebug(collision.left, collision.top, collision.right, collision.bottom, Color.WHITE);
+			g.drawRectDebug(col.left, col.top, col.right, col.bottom, Color.WHITE);
 		
-		g.drawImage(currentSprite, getCenterX() - getWidth()/2, getCenterY() - getHeight()/2);
+		g.drawImage(currentSprite, centerX - width/2, centerY - height/2);
 	}
 	
 	public void nullify(){
