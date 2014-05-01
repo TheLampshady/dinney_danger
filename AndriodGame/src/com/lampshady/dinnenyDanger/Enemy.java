@@ -2,7 +2,7 @@ package com.lampshady.dinnenyDanger;
 
 import android.graphics.Rect;
 
-abstract class Enemy {
+abstract class Enemy extends Character {
 	private int maxHealth, currentHealth;
 	private int centerX, centerY, width, height, speedX;
 	private int movementSpeed;

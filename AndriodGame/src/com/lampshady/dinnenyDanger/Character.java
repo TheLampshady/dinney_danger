@@ -11,12 +11,10 @@ public abstract class Character {
     protected int height, width;
     
     protected int maxHealth, currentHealth;
-    
-	public Rect topCol = new Rect(0, 0, 0, 0);
-    public Rect botCol = new Rect(0, 0, 0, 0);
-    public Rect lftCol = new Rect(0, 0, 0, 0);
-    public Rect rhtCol = new Rect(0, 0, 0, 0);
-    
+
+    protected Rect col, yellowRed;
+	protected Rect topCol, botCol, lftCol, rhtCol;
+	
 	public abstract void update();
 	
 	public abstract void draw(Graphics g);

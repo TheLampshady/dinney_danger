@@ -9,7 +9,7 @@ import com.lampshady.framework.Image;
 import android.graphics.Rect;
 import android.graphics.Color;
 
-public class Player {
+public class Player extends Character{
 	final int CENTERSCREEN = 300;
     final int JUMPSPEED = -15;
     final int MOVESPEED = 5;
@@ -17,28 +17,15 @@ public class Player {
 	
 	private Image currentSprite, character, characterDown, characterJumped, character2, character3;
 	private Animation anim;
-	
-	private int centerX = 100;
-	private int	centerY = 385;
-	private int speedX = 0;
-    private int speedY = 0;
     
-    private int height = 126;
-    private int width = 122;
-    private int bodyWidth = 68;
-    private int armHeight = 20;
-    private int armWidth = 26;
+    private int bodyWidth;
+    private int armHeight;
+    private int armWidth;
     
     private static Background bg1;               
 	private static Background bg2;
 	
-	public Rect topCol = new Rect(0, 0, 0, 0);
-    public Rect botCol = new Rect(0, 0, 0, 0);
-    public Rect lftCol = new Rect(0, 0, 0, 0);
-    public Rect rhtCol = new Rect(0, 0, 0, 0);
-    public Rect yellowRed = new Rect(0, 0, 0, 0);
-    public Rect footleft = new Rect(0,0,0,0);
-    public Rect footright = new Rect(0,0,0,0);
+    public Rect footleft, footright;
     
 	private boolean jumped = false;
     private boolean movingLeft = false;
@@ -51,7 +38,21 @@ public class Player {
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     
     public Player(){
-    	character = Assets.character;
+    	centerX = 100;
+	    centerY = 385;
+		speedX = 0;
+		speedY = 0;
+		
+		height = 126;
+    	width = 122;
+		bodyWidth = 68;
+     	armHeight = 20;
+    	armWidth = 26;
+		
+    	footleft = new Rect(0,0,0,0);
+		footright = new Rect(0,0,0,0);
+		
+		character = Assets.character;
 		character2 = Assets.character2;
 		character3 = Assets.character3;
 		characterDown = Assets.characterDown;
