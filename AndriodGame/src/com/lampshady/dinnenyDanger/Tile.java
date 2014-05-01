@@ -23,19 +23,19 @@ public class Tile {
         r = new Rect();
         switch (type) {
         
-        case '2':		tileImage = Assets.tileBot;
+        case '2':	tileImage = Assets.tileBot;
         			break;
-        case '4':		tileImage = Assets.tileLeft;
+        case '4':	tileImage = Assets.tileLeft;
         			break;
-        case '5':		tileImage = Assets.tile;
+        case '5':	tileImage = Assets.tile;
         			break;
-        case '6':		tileImage = Assets.tileRight;
+        case '6':	tileImage = Assets.tileRight;
         			break;
-        case '7':		tileImage = Assets.tileTopLeft;
+        case '7':	tileImage = Assets.tileTopLeft;
         			break;
-        case '8':		tileImage = Assets.tileTop;
+        case '8':	tileImage = Assets.tileTop;
         			break;
-        case '9':		tileImage = Assets.tileTopRight;
+        case '9':	tileImage = Assets.tileTopRight;
         			break;
         default: 	type = 0;
         			break;

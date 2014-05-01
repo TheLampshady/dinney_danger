@@ -8,8 +8,9 @@ import com.lampshady.framework.Screen;
 import com.lampshady.framework.Graphics.ImageFormat;
 
 public class LoadingScreen extends Screen {
-    public LoadingScreen(Game game) {
-       
+	boolean firstTimeCreate = true;
+	
+	public LoadingScreen(Game game) {
         super(game);
     }
 
@@ -52,13 +53,16 @@ public class LoadingScreen extends Screen {
         //LLoad Sound
         //Assets.click = game.getAudio().createSound("explode.ogg");
       
-        c = Calendar.getInstance();
-        loadTime = c.get(Calendar.SECOND)-loadTime;
+
         
-        if(loadTime<5 && loadTime>0){
-	        try {
-				Thread.sleep((waitTime-loadTime)*1000);
-			} catch (InterruptedException e) {}
+        if (firstTimeCreate) {
+        	firstTimeCreate = false;
+            c = Calendar.getInstance();
+            loadTime = c.get(Calendar.SECOND)-loadTime;
+            if(loadTime<5){
+            	try {Thread.sleep((waitTime-loadTime)*1000);}
+            	catch (InterruptedException e) {}
+            }
         }
 
         game.setScreen(new MainMenuScreen(game));

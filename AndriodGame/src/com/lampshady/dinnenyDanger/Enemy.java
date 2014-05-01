@@ -7,7 +7,9 @@ abstract class Enemy extends Character {
 	private Background bg = GameScreen.getBg1();
 	private Player player = GameScreen.getRobot();
 	
-	
+	public Enemy(){
+		super();
+	}
 	
 	// Behavioral Methods
 	public void update() {		

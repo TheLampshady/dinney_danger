@@ -1,7 +1,6 @@
 package com.lampshady.dinnenyDanger;
 
 import android.graphics.Rect;
-
 import com.lampshady.framework.Graphics;
 
 public abstract class Character {
@@ -16,6 +15,15 @@ public abstract class Character {
     
     protected Rect col, yellowRed;
 	protected Rect topCol, botCol, lftCol, rhtCol;
+	
+	public Character(){
+		col = new Rect();
+		yellowRed = new Rect();
+		topCol = new Rect();
+		botCol = new Rect();
+		lftCol = new Rect();
+		rhtCol = new Rect();
+	}
 	
 	public abstract void update();
 	

@@ -39,6 +39,8 @@ public class Player extends Character{
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     
     public Player(){
+    	super();
+    	
     	centerX = 100;
 	    centerY = 385;
 		speedX = 0;

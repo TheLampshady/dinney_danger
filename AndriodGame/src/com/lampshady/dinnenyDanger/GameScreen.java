@@ -106,7 +106,7 @@ public class GameScreen extends Screen {
 		int action=0;
 		
 		for (int i = 0; i < len; i++) {
-			TouchEvent event = (TouchEvent)touchEvents.get(i);
+			TouchEvent event = touchEvents.get(i);
 			
 			//Button Released
 			if (event.type == TouchEvent.TOUCH_UP) {
@@ -256,7 +256,7 @@ public class GameScreen extends Screen {
 		
 		ArrayList<Projectile> projectiles = player.getProjectiles();
 		for (int i = 0; i < projectiles.size(); i++) {
-			Projectile p = (Projectile) projectiles.get(i);
+			Projectile p = projectiles.get(i);
 			if (p.isVisible() == true) {
 				p.update();
 			} else {
@@ -293,7 +293,7 @@ public class GameScreen extends Screen {
 	private void updatePaused(List<TouchEvent> touchEvents) {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
-			TouchEvent event = (TouchEvent) touchEvents.get(i);
+			TouchEvent event = touchEvents.get(i);
 			if (event.type == TouchEvent.TOUCH_UP) {
 				if (inBounds(event, 0, 0, 800, 240)) {
 
@@ -314,7 +314,7 @@ public class GameScreen extends Screen {
 	private void updateGameOver(List<TouchEvent> touchEvents) {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
-			TouchEvent event = (TouchEvent) touchEvents.get(i);
+			TouchEvent event = touchEvents.get(i);
 			if (event.type == TouchEvent.TOUCH_DOWN) {
 				if (inBounds(event, 0, 0, 800, 480)) {
 					nullify();

@@ -136,7 +136,7 @@ public class GameMap {
 		char ch;
 		
 		for (int h = 0; h < height; h++) {
-			String line = (String) lines.get(h);
+			String line = lines.get(h);
 			for (int l = 0; l < sectionLen; l++) {
 
 				if (l < line.length()) {
@@ -171,14 +171,14 @@ public class GameMap {
 
 	public void update() {
 		for (int i = 0; i < tilearray.size(); i++) {
-			Tile t = (Tile) tilearray.get(i);
+			Tile t = tilearray.get(i);
 			t.update();
 		}
 	}
 	
 	public void paint(Graphics g) {
 		for (int i = 0; i < tilearray.size(); i++) {
-			Tile t = (Tile) tilearray.get(i);
+			Tile t = tilearray.get(i);
 			if (t.getType() != 0) {
 				g.drawImage(t.getTileImage(), t.getTileX(), t.getTileY());
 			}
