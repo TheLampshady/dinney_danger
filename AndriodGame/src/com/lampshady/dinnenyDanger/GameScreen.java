@@ -248,8 +248,13 @@ public class GameScreen extends Screen {
 		player.update();
 
 		//Update: Enemy Array
-		for (Heliboy hb : heliboys)
-			hb.update();
+		for (int i=0; i<heliboys.size();i++)
+			if (heliboys.get(i).getCurrentHealth() == 0) {
+				heliboys.remove(i);
+				GameScreen.score += 5;
+			}else
+				heliboys.get(i).update();
+		
 		
 		//Update: Tiles
 		level.update();

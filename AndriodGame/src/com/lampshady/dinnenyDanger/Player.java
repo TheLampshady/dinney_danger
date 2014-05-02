@@ -11,11 +11,10 @@ import android.graphics.Color;
 
 public class Player extends Character{
 	final int CENTERSCREEN = 300;
-    final int JUMPSPEED = -15;
-    final int MOVESPEED = 5;
+
   
 	
-	private Image currentSprite, character, character2, character3;
+	private Image character, character2, character3;
 	private Image characterDown, characterJumped;
 	private Animation anim;
     
@@ -29,12 +28,8 @@ public class Player extends Character{
     public Rect footleft, footright;
     
 	private boolean jumped = false;
-    private boolean movingLeft = false;
-    private boolean movingRight = false;
     private boolean ducked = false;
     private boolean readyToFire = true;
-    private boolean rightWall = false;
-    private boolean leftWall = false;
     
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     
@@ -45,6 +40,9 @@ public class Player extends Character{
 	    centerY = 385;
 		speedX = 0;
 		speedY = 0;
+		
+	    jumpSpeed = -15;
+	    moveSpeed = 5;
 		
 		height = 126;
     	width = 122;
@@ -80,7 +78,7 @@ public class Player extends Character{
         // Moves Character or Scrolls Background accordingly.
 
 		if(movingRight) 
-			 speedX = MOVESPEED;
+			 speedX = moveSpeed;
 		
         if (speedX < 0) {
             centerX += speedX;
@@ -98,8 +96,8 @@ public class Player extends Character{
         
         //Scroll Screen: If moving at center screen
         if (speedX > 0 && centerX > CENTERSCREEN && !rightWall) {
-            bg1.setSpeedX(-MOVESPEED);
-            bg2.setSpeedX(-MOVESPEED);
+            bg1.setSpeedX(-moveSpeed);
+            bg2.setSpeedX(-moveSpeed);
         }
 
         // Updates Y Position
@@ -150,7 +148,7 @@ public class Player extends Character{
     }//Update
     
     public void draw(Graphics g){ 
-		g.drawImage(currentSprite, centerX - width/2, centerY - height/2);
+		super.draw(g);
 		
 		//Android Port: Drawing Rectangles
 		//g.setColor(Color.WHITE);
@@ -169,12 +167,12 @@ public class Player extends Character{
     
     public void moveRight() {
         if (ducked == false)
-            speedX = MOVESPEED;      
+            speedX = moveSpeed;      
     }
 
     public void moveLeft() {
         if (ducked == false) {
-            speedX = -MOVESPEED;
+            speedX = -moveSpeed;
         }
     }
 
@@ -204,7 +202,7 @@ public class Player extends Character{
 
     public void jump() {
         if (jumped == false) {
-            speedY = JUMPSPEED;
+            speedY = jumpSpeed;
             jumped = true;
         }
     }

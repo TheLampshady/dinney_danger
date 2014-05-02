@@ -7,15 +7,12 @@ abstract class Enemy extends Character {
 	private Background bg = GameScreen.getBg1();
 	private Player player = GameScreen.getRobot();
 	
-	public Enemy(){
-		super();
-	}
 	
 	// Behavioral Methods
-	public void update() {		
+	public void update() {
 		follow();
 
-		centerX += (bg.getSpeedX() + speedX);		
+		centerX += (bg.getSpeedX() + speedX);	
 		
 		//Android Port: x.setBounds(centerX-25, centerY-25, width-46, height-36);
 		col.set(centerX - width/2, centerY - height/2, centerX + width/2, centerY + height/2);
@@ -50,9 +47,9 @@ abstract class Enemy extends Character {
 		//Engage Direction
 		else {
 			if (player.getCenterX() >= centerX)
-				speedX = 1;
+				speedX = moveSpeed;
 			else
-				speedX = -1;
+				speedX = -moveSpeed;
 		}
 
 	}

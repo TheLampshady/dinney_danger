@@ -53,11 +53,6 @@ public class Projectile {
 				if (health > 0) {
 					GameScreen.heliboys.get(i).setCurrentHealth(health - damage);
 				}
-				if (hb.getCurrentHealth() == 0) {
-					GameScreen.heliboys.remove(i);
-					GameScreen.score += 5;
-
-				}
 			}
 			i++;
 		}

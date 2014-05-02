@@ -7,7 +7,7 @@ import android.graphics.Color;
 
 public class Heliboy extends Enemy{
 
-	private Image heliboy, heliboy2, heliboy3, heliboy4, heliboy5, currentSprite;
+	private Image heliboy, heliboy2, heliboy3, heliboy4, heliboy5;
 	private Animation hanim;
 
 	
@@ -22,6 +22,8 @@ public class Heliboy extends Enemy{
 		
 		maxHealth=5;
 		currentHealth=5;
+		
+		moveSpeed = 1;
 		
 		heliboy = Assets.heliboy1a;
 		heliboy2 = Assets.heliboy1b;
@@ -51,10 +53,11 @@ public class Heliboy extends Enemy{
 	}
 	
 	public void draw(Graphics g){
+		super.draw(g);
+		
 		if(GameScreen.DEBUG)
 			g.drawRectDebug(col.left, col.top, col.right, col.bottom, Color.WHITE);
 		
-		g.drawImage(currentSprite, centerX - width/2, centerY - height/2);
 	}
 	
 	public void nullify(){
