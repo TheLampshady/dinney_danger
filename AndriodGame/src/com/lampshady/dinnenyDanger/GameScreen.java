@@ -2,7 +2,7 @@ package com.lampshady.dinnenyDanger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import android.graphics.Color;
 import android.graphics.Paint;
