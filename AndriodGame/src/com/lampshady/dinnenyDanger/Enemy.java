@@ -5,7 +5,7 @@ import android.graphics.Rect;
 abstract class Enemy extends Character {
 	
 	private Background bg = GameScreen.getBg1();
-	private Player player = GameScreen.getRobot();
+	private Player player = GameScreen.getPlayer();
 	
 	
 	// Behavioral Methods

@@ -23,8 +23,8 @@ public class GameScreen extends Screen {
 	private static Player player;
 	public static ArrayList<Heliboy> heliboys;
 	
-	private static ArrayList<Button> buttons;
 	private GameMap level;
+	private GamePad gamePad;
 		
 	
 	public static int score;
@@ -38,27 +38,12 @@ public class GameScreen extends Screen {
 		bg1 = new Background(0, 0);
 		bg2 = new Background(2160, 0);
 		
-		player = new Player();
+		player = new Player(100,380);
 		
 		heliboys = new ArrayList<Heliboy>();
 
+		gamePad = new GamePad();
 		level = new GameMap();
-		
-		/*	1-Jump
-		 *	2-Duck
-		 *	3-Pause		
-		 *	4-Left
-		 *	5-Right		
-		 *	6-Shoot
-		 */
-		buttons = new ArrayList<Button>();
-		buttons.add(new Button(1, 	Button.bgRight, Button.bgBot-Button.len*2,0,0,Button.len,Button.len));
-		buttons.add(new Button(2,	Button.bgRight-Button.len, Button.bgBot-Button.len,0,Button.len*2,Button.len,Button.len));
-		buttons.add(new Button(3,	0, 0, 0, Button.len*3, 35, 35));
-		buttons.add(new Button(4,	0, Button.bgBot-Button.len, 0, Button.len*4, Button.len, Button.len));
-		buttons.add(new Button(5,	Button.len*2, Button.bgBot-Button.len, 0, Button.len*5, Button.len, Button.len));
-		buttons.add(new Button(6,	Button.bgRight, Button.bgBot, 0, Button.len, Button.len, Button.len));
-
 		
 		score = 0;
 
@@ -66,17 +51,9 @@ public class GameScreen extends Screen {
 		level.loadMap();
 
 		// Defining a paint object
-		paint = new Paint();
-		paint.setTextSize(30);
-		paint.setTextAlign(Paint.Align.CENTER);
-		paint.setAntiAlias(true);
-		paint.setColor(Color.WHITE);
+		paint = getDefaultPaint(30);
+		paint2 = getDefaultPaint(100);
 
-		paint2 = new Paint();
-		paint2.setTextSize(100);
-		paint2.setTextAlign(Paint.Align.CENTER);
-		paint2.setAntiAlias(true);
-		paint2.setColor(Color.WHITE);
 	}
 	
 	
@@ -98,143 +75,12 @@ public class GameScreen extends Screen {
 	}
 	
 	private void updateRunning(List<TouchEvent> touchEvents, float deltaTime) {
-		Button duck = buttons.get(2);
-		Button left = buttons.get(4);
-		Button right = buttons.get(5);
 		
-		int len = touchEvents.size();
-		int action=0;
+		gamePad.update(touchEvents);
+		gamePad.updateState();
 		
-		for (int i = 0; i < len; i++) {
-			TouchEvent event = touchEvents.get(i);
-			
-			//Button Released
-			if (event.type == TouchEvent.TOUCH_UP) {
-				for(Button b : buttons)
-					if(b.inBounds(event))action = b.getAction();
-							
-				switch (action) {
+		if(gamePad.toPause()) pause();
 				
-				case 2:	//Button Release: Duck
-					player.setDucked(false);
-					break;
-				case 3:	//Button Release: Pause
-					pause();
-					break;
-				case 4:	//Button Release: Left
-					player.setMovingLeft(false);
-					break;
-
-				case 5:	//Button Release: Right
-					player.setMovingRight(false);
-					break;
-
-				}
-			}
-			
-			//Button Pressed
-			if (event.type == TouchEvent.TOUCH_DOWN) {
-
-				for(Button b : buttons)
-					if(b.inBounds(event))action = b.getAction();
-				
-				//Actions for pushing button
-				switch (action) {
-				case 1:	//Button Pressed: Jump
-					player.jump();
-					player.setDucked(false);
-					break;
-					
-				case 2:	//Button Pressed: Duck
-					if(player.isJumped() == false){
-						player.setDucked(true);
-						duck.setTouchID(event.pointer);
-					}
-					break;	
-					
-				case 4:	//Button Pressed: Left
-					player.setMovingLeft(true);
-					left.setTouchID(event.pointer);
-					break;
-				
-				case 5:	//Button Pressed: Right
-					player.setMovingRight(true);
-					right.setTouchID(event.pointer);
-					break;	
-	
-				case 6:	//Button Pressed: Shoot
-					if (player.isDucked() == false && player.isJumped() == false && player.isReadyToFire())
-						player.shoot();
-					break;
-					
-				}
-
-			}
-			
-			if (event.type == TouchEvent.TOUCH_DRAGGED) {
-								
-				duck = buttons.get(2);
-				if((event.pointer == duck.getTouchID()) && (!duck.inBounds(event))){
-					player.setMovingRight(false);
-					duck.setTouchID(-1);
-				}
-				
-				left = buttons.get(4);
-				if((event.pointer == left.getTouchID()) && (!left.inBounds(event))){
-					player.setMovingLeft(false);
-					left.setTouchID(-1);
-				}
-				
-				right = buttons.get(5);
-				if((event.pointer == right.getTouchID()) && (!right.inBounds(event))){
-					player.setMovingRight(false);
-					right.setTouchID(-1);
-				}
-				
-				
-				for(Button b : buttons)
-					if(b.inBounds(event))action = b.getAction();
-				
-				switch (action) {
-				case 2:	//Button Dragged: Duck
-					if(player.isJumped() == false){
-						player.setDucked(true);
-						duck.setTouchID(event.pointer);
-					}
-					break;
-				case 4:	//Button Dragged: Left
-					player.setMovingLeft(true);
-					left.setTouchID(event.pointer);
-					break;
-				case 5:	//Button Dragged: Right
-					player.setMovingRight(true);
-					right.setTouchID(event.pointer);
-					break;
-
-				}
-
-			}
-
-		}// For Loop
-		
-
-		//Check Button State: Duck Button
-		if(player.isDucked())
-			player.setSpeedX(0);
-		
-		//Check Button State: Left Button
-		if(player.isMovingLeft())
-			player.moveLeft();
-		else
-			player.stopLeft();
-				
-		//Check Button State: Right Button
-		if(player.isMovingRight())
-			player.moveRight();
-		else
-			player.stopRight();
-		
-		
 		//Check miscellaneous events like death:
 		if (livesLeft == 0) {
 			state = GameState.GameOver;
@@ -249,7 +95,7 @@ public class GameScreen extends Screen {
 
 		//Update: Enemy Array
 		for (int i=0; i<heliboys.size();i++)
-			if (heliboys.get(i).getCurrentHealth() == 0) {
+			if (!heliboys.get(i).isVisible()) {
 				heliboys.remove(i);
 				GameScreen.score += 5;
 			}else
@@ -258,31 +104,13 @@ public class GameScreen extends Screen {
 		
 		//Update: Tiles
 		level.update();
-		
-		ArrayList<Projectile> projectiles = player.getProjectiles();
-		for (int i = 0; i < projectiles.size(); i++) {
-			Projectile p = projectiles.get(i);
-			if (p.isVisible() == true) {
-				p.update();
-			} else {
-				projectiles.remove(i);
-			}
-		}
-	
+			
 
 		if (player.getCenterY() > 500) {
 			state = GameState.GameOver;
 		}
 	}// updateRunning
 
-	private boolean inBounds(TouchEvent event, int x, int y, int width,
-			int height) {
-		if (event.x > x && event.x < x + width - 1 && event.y > y
-				&& event.y < y + height - 1)
-			return true;
-		else
-			return false;
-	}
 	
 	private void updateReady(List<TouchEvent> touchEvents) {
 
@@ -338,11 +166,7 @@ public class GameScreen extends Screen {
 
 		g.drawImage(Assets.background, bg1.getBgX(), bg1.getBgY());
 		g.drawImage(Assets.background, bg2.getBgX(), bg2.getBgY());
-		
-		//Draw: Projectiles
-		for(Projectile p : player.getProjectiles())
-			p.draw(g);
-			
+					
 		//Draw Level
 		level.paint(g);
 			
@@ -404,10 +228,9 @@ public class GameScreen extends Screen {
 
 	private void drawRunningUI() {
 		Graphics g = game.getGraphics();
-		for(Button b : buttons)
-			b.draw(g);
-	
+		gamePad.draw(g);
 	}
+	
 	private void drawPausedUI() {
 		Graphics g = game.getGraphics();
 		// Darken the entire screen so you can display the Paused screen.
@@ -452,6 +275,24 @@ public class GameScreen extends Screen {
 		game.setScreen(new MainMenuScreen(game));
 
 	}
+	
+	private boolean inBounds(TouchEvent event, int x, int y, int width,
+			int height) {
+		if (event.x > x && event.x < x + width - 1 && event.y > y
+				&& event.y < y + height - 1)
+			return true;
+		else
+			return false;
+	}
+	
+	private Paint getDefaultPaint(int size){
+		Paint p = new Paint();
+		p.setTextSize(size);
+		p.setTextAlign(Paint.Align.CENTER);
+		p.setAntiAlias(true);
+		p.setColor(Color.WHITE);
+		return p;
+	}
 
 	public static Background getBg1() {
 		return bg1;
@@ -461,7 +302,7 @@ public class GameScreen extends Screen {
 		return bg2;
 	}
 
-	public static Player getRobot() {
+	public static Player getPlayer() {
 		return player;
 	}
 

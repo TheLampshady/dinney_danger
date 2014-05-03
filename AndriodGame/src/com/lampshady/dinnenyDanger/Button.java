@@ -5,13 +5,9 @@ import com.lampshady.framework.Image;
 import com.lampshady.framework.Input.TouchEvent;
 
 public class Button {
-
-	public static final int len = 65;
-	public static final int bgBot = 415;
-	public static final int bgRight = 735;
-	
+	private int index;
 	private int touchID;
-	private int action;
+	private boolean updated;
 	
 	private int bgX, bgY;
 	private int left, top, right, bot;
@@ -21,8 +17,8 @@ public class Button {
 	public Button(int action, int bgX, int bgY, int left, int top, int right, int bot){
 		iButton = Assets.button;
 		touchID=-1;
-		
-		this.action = action;
+			
+		this.index = action;
 		this.bgX = bgX;
 		this.bgY = bgY;
 		this.left = left;
@@ -44,16 +40,24 @@ public class Button {
 	}
 
 	public int getAction() {
-		return action;
+		return index;
 	}
-
 	public int getTouchID() {
 		return touchID;
 	}
-
+	public boolean isPressed() {
+		return touchID!=-1;
+	}
 	public void setTouchID(int touchID) {
+		updated=true;
 		this.touchID = touchID;
 	}
-		
+	public boolean isUpdated() {
+		return updated;
+	}
+	public void setUpdated(boolean released) {
+		this.updated = released;
+	}
+	
 
 }

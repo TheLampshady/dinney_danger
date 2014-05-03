@@ -1,8 +1,6 @@
 package com.lampshady.dinnenyDanger;
 
 
-import java.util.ArrayList;
-
 import com.lampshady.framework.Graphics;
 import com.lampshady.framework.Image;
 
@@ -11,7 +9,6 @@ import android.graphics.Color;
 
 public class Player extends Character{
 	final int CENTERSCREEN = 300;
-
   
 	
 	private Image character, character2, character3;
@@ -31,13 +28,13 @@ public class Player extends Character{
     private boolean ducked = false;
     private boolean readyToFire = true;
     
-    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    private Ballistics gun = new Ballistics();
     
-    public Player(){
+    public Player(int centerX, int centerY){
     	super();
     	
-    	centerX = 100;
-	    centerY = 385;
+    	this.centerX = centerX;
+	    this.centerY = centerY;
 		speedX = 0;
 		speedY = 0;
 		
@@ -76,13 +73,10 @@ public class Player extends Character{
     
     public void update() {
         // Moves Character or Scrolls Background accordingly.
-
-		if(movingRight) 
-			 speedX = moveSpeed;
+		if(movingRight) speedX = moveSpeed;
 		
-        if (speedX < 0) {
-            centerX += speedX;
-        }
+        if (speedX < 0) centerX += speedX;
+        
         
         if (speedX == 0 || speedX < 0 || rightWall) {
             bg1.setSpeedX(0);
@@ -90,9 +84,9 @@ public class Player extends Character{
         }
         
         //Move Character: If left of Screen Center
-        if (centerX <= CENTERSCREEN && speedX > 0) {
+        if (centerX <= CENTERSCREEN && speedX > 0)
             centerX += speedX;
-        }
+        
         
         //Scroll Screen: If moving at center screen
         if (speedX > 0 && centerX > CENTERSCREEN && !rightWall) {
@@ -107,14 +101,12 @@ public class Player extends Character{
         speedY += gravity;
 
         //Handles falling without jumping
-        if (speedY > 3){
-            jumped = true;
-        }
+        if (speedY > 3) jumped = true;
+        
 
         // Prevents going beyond X coordinate of 0
-        if (centerX + speedX <= (width/2)-1) {
-            centerX = (width/2);
-        }
+        if (centerX + speedX <= (width/2)-1) centerX = (width/2);
+        
         
         //Android Port:  Rect uses positions for all points
         //Android Port:  rect.setRect(centerX - 34, centerY - height/2, 68, height/2);
@@ -134,14 +126,14 @@ public class Player extends Character{
         footright.set(centerX, centerY + 20, centerX+50, centerY +35);
         
         if (!isDucked()){
-			if (isJumped())
-				currentSprite = characterJumped;
-			else
-				currentSprite = anim.getImage();
+			if (isJumped()) currentSprite = characterJumped;
+			else currentSprite = anim.getImage();
 		}
 		else
 			currentSprite = characterDown;
 
+        gun.update();
+        
         anim.update(10);
         rightWall=false;
         leftWall=false;
@@ -149,6 +141,8 @@ public class Player extends Character{
     
     public void draw(Graphics g){ 
 		super.draw(g);
+		
+		gun.draw(g);
 		
 		//Android Port: Drawing Rectangles
 		//g.setColor(Color.WHITE);
@@ -171,9 +165,8 @@ public class Player extends Character{
     }
 
     public void moveLeft() {
-        if (ducked == false) {
+        if (ducked == false)
             speedX = -moveSpeed;
-        }
     }
 
     public void stopRight() {
@@ -208,10 +201,9 @@ public class Player extends Character{
     }
     
     public void shoot() {
-    	if (readyToFire) {
-    		Projectile p = new Projectile(centerX + 50, centerY - 25);
-    		projectiles.add(p);
-    	}
+    	if (readyToFire)
+    		gun.shoot(centerX, centerY);
+    	
     }
     
     public void nullify(){
@@ -220,11 +212,9 @@ public class Player extends Character{
 		character2 = null;
 		character3 = null;
 		anim = null;
+		gun.nullify();
+		gun=null;
 		
-		for (Projectile p : projectiles){
-			p.nullify();
-			p=null;
-		}
     }
 	
 	public int getCenterX() {
@@ -293,10 +283,9 @@ public class Player extends Character{
 	public void setReadyToFire(boolean readyToFire) {
 		this.readyToFire = readyToFire;
 	}
-	public ArrayList<Projectile> getProjectiles() {
-		return projectiles;
+	public Ballistics getGun() {
+		return gun;
 	}
-	public void setProjectiles(ArrayList<Projectile> projectiles) {
-		this.projectiles = projectiles;
-	}
+	
+
 }

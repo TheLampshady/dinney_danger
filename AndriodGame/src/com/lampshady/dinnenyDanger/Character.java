@@ -13,6 +13,8 @@ public abstract class Character {
     protected int height, width;
 
     protected int maxHealth, currentHealth;
+    
+    protected boolean visible;
 
     protected int jumpSpeed = -15;
     protected int moveSpeed = 5;
@@ -28,6 +30,8 @@ public abstract class Character {
 	protected boolean leftWall = false;
 	
 	public Character(){
+		visible = true;
+		
 		col = new Rect();
 		yellowRed = new Rect();
 		topCol = new Rect();
@@ -51,6 +55,11 @@ public abstract class Character {
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
 	}
-	
+	public boolean isVisible() {
+		return visible;
+	}
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 	
 }

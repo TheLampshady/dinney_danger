@@ -13,7 +13,7 @@ public class Tile {
     
     private Background bg = GameScreen.getBg1();
     //private Robot robot = StartingClass.getRobot();
-    private Player player = GameScreen.getRobot();
+    private Player player = GameScreen.getPlayer();
     
     public Tile(int x, int y, char typeChar) {
         tileX = x * tileSize;

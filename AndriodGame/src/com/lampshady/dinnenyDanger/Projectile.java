@@ -8,7 +8,9 @@ import android.graphics.Rect;
 public class Projectile {
 	private int damage;
 	
-	private int x, y, width, height, speedX;
+	private int x, y, width, height;
+	private int speedX;
+	
 	private boolean visible;
 	private Image bullet;
 	
@@ -20,7 +22,8 @@ public class Projectile {
 		width = 20;
 		height = 5;
 		
-		damage =1;
+		damage = 1;
+
 		
 		speedX = 7;
 		visible = true;
@@ -44,17 +47,16 @@ public class Projectile {
 	}
 	
 	private void checkEnemyCollision() {
-		int i = 0;
+
 		for(Heliboy hb : GameScreen.heliboys){
 			int health = hb.getCurrentHealth();
 			
 			if(Rect.intersects(collision,hb.col)){
-				visible = false;	
-				if (health > 0) {
-					GameScreen.heliboys.get(i).setCurrentHealth(health - damage);
-				}
+				visible = false;
+				
+				if (health > 0) hb.setCurrentHealth(health - damage);
+				else hb.setVisible(false);
 			}
-			i++;
 		}
 	}
 	
