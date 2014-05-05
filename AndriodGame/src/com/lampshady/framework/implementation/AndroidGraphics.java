@@ -138,6 +138,12 @@ public class AndroidGraphics implements Graphics {
         canvas.drawBitmap(((AndroidImage)Image).bitmap, x, y, null);
     }
     
+    public void drawClearImage(Image Image, int x, int y, int alpha){
+    	Paint paint = new Paint();    
+    	paint.setAlpha(alpha);
+    	 canvas.drawBitmap(((AndroidImage)Image).bitmap, x, y, paint);
+    }
+    
     public void drawScaledImage(Image Image, int x, int y, int width, int height, int srcX, int srcY, int srcWidth, int srcHeight){
     	
     	

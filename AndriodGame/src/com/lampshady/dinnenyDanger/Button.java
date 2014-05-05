@@ -5,6 +5,7 @@ import com.lampshady.framework.Image;
 import com.lampshady.framework.Input.TouchEvent;
 
 public class Button {
+	int alpha;
 	private int index;
 	private int touchID;
 	private boolean updated;
@@ -17,7 +18,9 @@ public class Button {
 	public Button(int action, Image image, int bgX, int bgY, int height, int width){
 		iButton = Assets.button;
 		touchID=-1;
-			
+		//From 0(clear) to 255(full)
+		alpha = 185;
+		
 		this.index = action;
 		this.bgX = bgX;
 		this.bgY = bgY;
@@ -31,7 +34,7 @@ public class Button {
 	
 	public void draw(Graphics g){
 		//g.drawImage(iButton, bgX, bgY, left, top, right, bot);
-		g.drawImage(iButton, bgX, bgY);
+		g.drawClearImage(iButton, bgX, bgY, alpha);
 	}
 	
 	public boolean inBounds(TouchEvent event) {
