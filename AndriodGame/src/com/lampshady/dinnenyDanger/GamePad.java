@@ -24,12 +24,12 @@ public class GamePad {
 		 *	6-Shoot
 		 */
 		buttons = new ArrayList<Button>();
-		buttons.add(new Button(1, 	bgRight, bgBot-len*2,0,0,len,len));
-		buttons.add(new Button(2,	bgRight-len, bgBot-len,0,len*2,len,len));
-		buttons.add(new Button(3,	0, 0, 0, len*3, 35, 35));
-		buttons.add(new Button(4,	0, bgBot-len, 0, len*4, len, len));
-		buttons.add(new Button(5,	len*2, bgBot-len, 0, len*5, len, len));
-		buttons.add(new Button(6,	bgRight, bgBot, 0, len, len, len));
+		buttons.add(new Button(1, Assets.buttonJump, bgRight, 		bgBot-len*2,len,len));
+		buttons.add(new Button(2, Assets.buttonDuck, bgRight-len, 	bgBot-len,	len,len));
+		buttons.add(new Button(3, Assets.buttonLeft, 0, bgBot-len, len, len));
+		buttons.add(new Button(4, Assets.buttonRight,len*2, bgBot-len, len, len));
+		buttons.add(new Button(5, Assets.buttonShoot,bgRight, bgBot, len, len));
+		buttons.add(new Button(6, Assets.buttonPause,0, 0,35, 35));
 		
 	}
 	
@@ -82,15 +82,15 @@ public class GamePad {
 					if(player.isJumped() == false)
 						player.setDucked(true);
 					break;
-				case 4:	//Button Pressed: Left
+				case 3:	//Button Pressed: Left
 					player.setMovingLeft(true);
 					break;
 				
-				case 5:	//Button Pressed: Right
+				case 4:	//Button Pressed: Right
 					player.setMovingRight(true);
 					break;
 	
-				case 6:	//Button Pressed: Shoot
+				case 5:	//Button Pressed: Shoot
 					if (player.isDucked() == false && player.isJumped() == false && player.isReadyToFire())
 						player.shoot();
 					break;
@@ -105,11 +105,11 @@ public class GamePad {
 					player.setDucked(false);
 					break;
 				
-				case 4:	//Left
+				case 3:	//Left
 					player.setMovingLeft(false);
 					break;
 
-				case 5:	//Right
+				case 4:	//Right
 					player.setMovingRight(false);
 					break;
 
@@ -145,7 +145,7 @@ public class GamePad {
 	}
 	
 	public boolean toPause(){
-		return(!buttons.get(2).isPressed() && buttons.get(2).isUpdated());
+		return(!buttons.get(5).isPressed() && buttons.get(5).isUpdated());
 	}
 	
 }

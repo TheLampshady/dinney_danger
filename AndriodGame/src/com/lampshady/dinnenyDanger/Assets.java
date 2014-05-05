@@ -10,6 +10,7 @@ public class Assets {
     public static Image character, character2, character3, characterJump, characterDown, bullet;
     public static Image tile, tileTop, tileBot, tileLeft, tileRight, tileTopLeft, tileTopRight;
     public static Image heliboy1a, heliboy1b, heliboy1c, heliboy1d, heliboy1e;
+	public static Image buttonJump, buttonDuck, buttonRight, buttonLeft, buttonShoot, buttonPause;
     
     public static Sound click;
     public static Music theme;

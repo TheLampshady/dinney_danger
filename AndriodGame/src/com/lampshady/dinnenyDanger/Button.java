@@ -10,29 +10,32 @@ public class Button {
 	private boolean updated;
 	
 	private int bgX, bgY;
-	private int left, top, right, bot;
+	int height, width;
 	
 	private Image iButton;
 	
-	public Button(int action, int bgX, int bgY, int left, int top, int right, int bot){
+	public Button(int action, Image image, int bgX, int bgY, int height, int width){
 		iButton = Assets.button;
 		touchID=-1;
 			
 		this.index = action;
 		this.bgX = bgX;
 		this.bgY = bgY;
-		this.left = left;
-		this.top = top;
-		this.right = right;
-		this.bot = bot;
+		
+		this.height = height;
+		this.width = width;
+		
+		iButton = image;
+				
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(iButton, bgX, bgY, left, top, right, bot);
+		//g.drawImage(iButton, bgX, bgY, left, top, right, bot);
+		g.drawImage(iButton, bgX, bgY);
 	}
 	
 	public boolean inBounds(TouchEvent event) {
-		if (event.x > bgX && event.x < bgX + right - 1 && event.y > bgY && event.y < bgY + bot - 1){
+		if (event.x > bgX && event.x < bgX + width - 1 && event.y > bgY && event.y < bgY + height - 1){
 			touchID=event.pointer;
 			return true;
 		} else

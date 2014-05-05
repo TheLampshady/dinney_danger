@@ -48,7 +48,13 @@ public class LoadingScreen extends Screen {
         Assets.tileTopLeft = g.newImage(world+"tile7.png", ImageFormat.RGB565);
         Assets.tileTopRight = g.newImage(world+"tile9.png", ImageFormat.RGB565);
        
-        Assets.button = g.newImage("button.jpg", ImageFormat.RGB565);
+      
+        Assets.buttonJump = g.newImage("button.jump.png", ImageFormat.RGB565);
+        Assets.buttonDuck = g.newImage("button.duck.png", ImageFormat.RGB565);
+        Assets.buttonRight = g.newImage("button.right.png", ImageFormat.RGB565);
+        Assets.buttonLeft = g.newImage("button.left.png", ImageFormat.RGB565);
+        Assets.buttonShoot = g.newImage("button.shoot.png", ImageFormat.RGB565);
+        Assets.buttonPause = g.newImage("button.pause.png", ImageFormat.RGB565);
 
         //LLoad Sound
         //Assets.click = game.getAudio().createSound("explode.ogg");
